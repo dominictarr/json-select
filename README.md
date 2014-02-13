@@ -4,8 +4,33 @@ filter out a portion of a (very large) json file.
 
 ## Example
 
+pipe a text stream of json into json-select, and pull out just 3 keys per row.
+
 ``` js
-var select = require('json-select')
+var request = require('request')
+var JSONSelect = require('json-select')
+
+request('https://npmjs.org/browserify')
+  .pipe(JSONSelect(
+    ['versions', true, {name: true, version: true, dependencies:true}]
+  ))
+  .pipe(process.stdout)
+```
+
+## cli tool
+
+to do the same as above, but from bash:
+
+``` js
+npm install json-select
+curl https://npmjs.org/browserify | json-select 'versions.*.{name, version, dependencies}'
+```
+the selector can be either valid json, or the terse syntax as in this example.
+
+## use on a js object
+
+``` js
+var select = require('json-select/select')
 
 select(
 //the object to select from
@@ -28,6 +53,8 @@ select(
 ]
 
 ```
+
+## Selector Syntax
 
 The selector syntax is based on `JSONStream`,
 except you can provide an object which collects values the object.
