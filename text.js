@@ -9,12 +9,18 @@ function isObject(o) {
   return o && 'object' === typeof o
 }
 
+function isSpecial(o, a) {
+  if(!isObject(o)) return false
+  var keys = Object.keys(o)
+  return keys.length === 1 && o[keys[0]] === a[keys[0]]
+}
+
 module.exports = function (path, opts) {
   var post = path.slice()
   var pre = []
-  while(post[0] && !isObject(post[0]))
+  while(post[0] && (!isObject(post[0]) || isSpecial(post[0], {recurse: true}))
     pre.push(post.shift())
-  console.log(pre, post)
+
   return JSONStream.parse(pre, function (obj) {
     return select(obj, post, opts)
   })
