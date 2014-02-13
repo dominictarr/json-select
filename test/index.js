@@ -119,6 +119,9 @@ var expected = [
 
 
 tape('produce the correct output', function (t) {
+  console.error(
+    JSON.stringify(select(obj, path, {arrays: true}),null, 2)
+  )
   t.equal(
     JSON.stringify(select(obj, path, {arrays: true})),
     JSON.stringify(expected)
