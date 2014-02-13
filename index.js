@@ -26,7 +26,7 @@ function match (obj, path, opts) {
     for(var key in obj) {
       var v = match(obj[key], rest, opts)
       if(v !== undefined)
-        a[key] = v
+        isArray(a) ? a.push(v) : a[key] = v
     }
     return a
   }
