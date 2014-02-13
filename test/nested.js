@@ -1,5 +1,5 @@
 var tape = require('tape')
-var select = require('../')
+var select = require('../select')
 
 var path = [
       'rows', 
