@@ -18,7 +18,7 @@ function isSpecial(o, a) {
 module.exports = function (path, opts) {
   var post = path.slice()
   var pre = []
-  while(post[0] && (!isObject(post[0]) || isSpecial(post[0], {recurse: true}))
+  while(post[0] && (!isObject(post[0]) || isSpecial(post[0], {recurse: true})))
     pre.push(post.shift())
 
   return JSONStream.parse(pre, function (obj) {
@@ -33,11 +33,13 @@ if(!module.parent) {
     if(/^-+(a|arrays)$/.test(e))
       opts.arrays = true
     else
-      path = JSON.parse(e)
-      //TODO: make a nice syntax that allows you give a terser pattern.
+      try {
+        path = JSON.parse(e)
+      } catch (err) {
+        path = require('./parse')(e)
+      }
+    //TODO: make a nice syntax that allows you give a terser pattern.
   })
-
-  console.log(path)
 
   process.stdin
     .pipe(module.exports(path, opts))    
