@@ -1,0 +1,6 @@
+# json-select
+
+
+## License
+
+MIT
