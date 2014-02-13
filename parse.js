@@ -1,7 +1,3 @@
-
-
-var pattern = 'versions.*.{version, dependencies: optimist}'
-
 module.exports = parse
 
 function parse (pattern) {
@@ -13,18 +9,19 @@ function parse (pattern) {
     tokens.shift()
     do {
       //should be a name
-      console.log(token)
       token = tokens.shift().trim()
-      if(/,|}/.test(token)) throw new Error('unexpected '+token)
-      var name = token
 
+      if(/,|}/.test(token)) throw new Error('unexpected '+token)
+
+      var key = token
+      //should be a separator
       token = tokens.shift().trim()
-      if(/[,}]/.test(token))
-        obj[name] = true
-      else if(':' === token)
-        obj[name] = more()
+
+      if(/[,}]/.test(token)) obj[key] = true
+      else if(':' === token) obj[key] = more()
       
-      if(tokens[0] === '}') return obj
+      if(tokens[0] === '}')  return obj
+
     } while (tokens.length && token !== '}')
     return obj
   }
@@ -48,6 +45,8 @@ function parse (pattern) {
 }
 
 
-if(!module.parent)
+if(!module.parent) {
+  var pattern = 'versions.*.{version, dependencies: optimist}'
   console.log(parse(pattern))
+}
 
