@@ -54,11 +54,9 @@ var expected =
       "a": [
         1,
         2,
-        null,
         3
       ],
       "b": [
-        null,
         "B",
         "BB"
       ]
@@ -70,11 +68,9 @@ var expected =
       "a": [
         10,
         20,
-        null,
         30
       ],
       "b": [
-        null,
         "B",
         "BB"
       ]
@@ -86,11 +82,9 @@ var expected =
       "a": [
         100,
         200,
-        null,
         300
       ],
       "b": [
-        null,
         "B",
         "BB"
       ]
