@@ -35,11 +35,11 @@ function match (obj, path, opts) {
     for(var key in head) {
       //if key: string -> o[key] = obj[head[key]]
       var _path = head[key]
-      if(true === _path)  _path = key
-      else
+      if(true === _path) _path = key
+
       if(isString(_path)) o[key] = obj[_path]
       else
-      if(isArray(_path)) o[key] = match(obj, _path, opts)
+      if(isArray(_path))  o[key] = match(obj, _path, opts)
       else
       if(isObject(_path)) o[key] = match(obj, [_path], opts)
 
