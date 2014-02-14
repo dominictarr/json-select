@@ -48,8 +48,8 @@ if(!module.parent) {
   process.stdin
     .pipe(module.exports(path, opts))    
     .pipe(opts.lines
-      ? JSONStream.stringify('', '\n', '', 0)
-      : JSONStream.stringify('[\n', ',\n', ']', 2)
+      ? JSONStream.stringify('', '\n', '\n', 0)
+      : JSONStream.stringify('[\n', ',\n', ']\n', 2)
     )
     .pipe(process.stdout)
 }
