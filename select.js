@@ -13,6 +13,10 @@ function isNullish (o) {
   return null == o
 }
 
+function isFunction (f) {
+  return 'function' === typeof f
+}
+
 var isArray = Array.isArray
 
 function match (obj, path, opts) {
@@ -48,6 +52,8 @@ function match (obj, path, opts) {
       if(isArray(_path))  o[key] = match(obj, _path, opts)
       else
       if(isObject(_path)) o[key] = match(obj, [_path], opts)
+      else
+      if(isFunction(_path)) o[key] = _path(obj)
 
     }
     return o
