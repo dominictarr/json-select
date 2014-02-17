@@ -9,11 +9,17 @@ function isObject (o) {
   return o && 'object' === typeof o
 }
 
+function isNullish (o) {
+  return null == o
+}
+
 var isArray = Array.isArray
 
 function match (obj, path, opts) {
   opts = opts || {}
   if(!path.length) return obj
+  if(isNullish(obj)) return null
+
   function create (o) {
     return isArray(o) ? [] : {}
   }
