@@ -1,7 +1,7 @@
 {
   "name": "json-select",
   "description": "select json from (very large) json files",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "homepage": "https://github.com/dominictarr/json-select",
   "repository": {
     "type": "git",
