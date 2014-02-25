@@ -1,5 +1,6 @@
 var tape = require('tape')
 var select = require('../')
+var parse = require('../parse')
 
 var data = {
   type: 'FeatureCollection',
@@ -30,14 +31,25 @@ var expected = [
 
 tape('regex on keys', function (t) {
   t.plan(1)
-  var s = select([ 'features', true, {
-    name: [ 'properties', /^name$/i ],
-    points: [ /^geo/i, 'coordinates' ]
-  } ])
+  var s = select(['features', true, {
+    name: ['properties', /^name$/i],
+    points: [/^geo/i, 'coordinates']
+  }])
   var rows = []
   s.on('data', function (row) { rows.push(row) })
   s.on('end', function () {
     t.deepEqual(rows, expected)
   })
   s.end(JSON.stringify(data))
+})
+
+tape('regex parse', function (t) {
+  var pattern = 'features.*.{name: properties./^name$/i, points: /^geo/i.coordinates}'
+  console.log(parse(pattern))
+  t.deepEqual(parse(pattern), 
+    ['features', true, {
+      name: ['properties', /^name$/i],
+      points: [/^geo/i, 'coordinates']
+    }])
+  t.end()
 })
