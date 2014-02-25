@@ -1,7 +1,8 @@
 module.exports = parse
 
 function parse (pattern) {
-  var tokens = pattern.split(/([{},.:])/).filter(Boolean)
+  var tokens = pattern.split(/(\/(?:(?:\\\/|[^\/]))+\/\w*|[{},.:])/)
+    .filter(Boolean)
 
   function object () {
     var obj = {}, token
@@ -11,6 +12,7 @@ function parse (pattern) {
       //should be a name
       token = tokens.shift().trim()
 
+      if(token === ',') continue
       if(/,|}/.test(token)) throw new Error('unexpected '+token)
 
       var key = token
@@ -27,7 +29,7 @@ function parse (pattern) {
   }
 
   function more () {
-    var path = []
+    var path = [], m
     while(tokens.length) {
       var token = tokens[0].trim()
       switch(token) {
@@ -35,7 +37,16 @@ function parse (pattern) {
         case '*': path.push(true); break;
         case '{': path.push(object()); break;
         case '}': return path; break;
-        default : path.push(token); break;
+        case ',': return path; break;
+        case '': break;
+        default :
+          if (m = /^\/(.+)\/(\w*)$/.exec(token)) {
+            path.push(new RegExp(m[1], m[2]))
+          }
+          else {
+            path.push(token)
+          }
+          break;
       }
       tokens.shift()
     }
