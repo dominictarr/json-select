@@ -52,9 +52,7 @@ function parse (pattern) {
     }
     return path
   }
-  var res = more()
-  console.error('res=', res)
-  return res
+  return more()
 }
 
 
