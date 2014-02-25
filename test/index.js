@@ -6,7 +6,7 @@ var path = [
       true, 
       {
         thing: 'whatever',
-        other: ['more', true, {a: true, c: ['C', true]}] 
+        other: ['more', true, {a: true, c: ['C']}] 
       }
     ]
 
@@ -56,14 +56,11 @@ var expected = [
       },
       {
         "a": 2,
-        "c": []
       },
       {
-        "c": []
       },
       {
         "a": 3,
-        "c": []
       }
     ]
   },
@@ -72,15 +69,11 @@ var expected = [
     "other": [
       {
         "a": 10,
-        "c": []
       },
       {
         "a": 20,
-        "c": []
       },
-      {
-        "c": []
-      },
+      {},
       {
         "a": 30,
         "c": [
@@ -96,11 +89,9 @@ var expected = [
     "other": [
       {
         "a": 100,
-        "c": []
       },
       {
         "a": 200,
-        "c": []
       },
       {
         "c": [
@@ -111,7 +102,6 @@ var expected = [
       },
       {
         "a": 300,
-        "c": []
       }
     ]
   }
