@@ -51,7 +51,7 @@ function match (obj, path, opts) {
     }
     return a
   }
-  else if('object' === typeof head) {
+  else if(isObject(head)) {
     var o = create(head)
     for(var key in head) {
       //if key: string -> o[key] = obj[head[key]]
@@ -67,7 +67,10 @@ function match (obj, path, opts) {
       if(isFunction(_path)) o[key] = _path(obj)
 
     }
-    return o
+    return match(o, rest, opts)
+  }
+  else if(isFunction (head)) {
+    return match(head(obj), rest, opts)     
   }
 }
 
