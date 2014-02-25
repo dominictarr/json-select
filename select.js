@@ -17,6 +17,15 @@ function isFunction (f) {
   return 'function' === typeof f
 }
 
+function isRegExp (o) {
+  return Object.prototype.toString.call(o) === '[object RegExp]'
+}
+
+function findKey (o, re) {
+  for(var key in o)
+    if (re.test(key)) return key
+}
+
 var isArray = Array.isArray
 
 function match (obj, path, opts) {
@@ -31,6 +40,8 @@ function match (obj, path, opts) {
   var head = rest.shift()
   if(isString(head))
     return match(obj[head], rest, opts)
+  else if (isRegExp(head))
+    return match(obj[findKey(obj, head)], rest, opts)
   else if(true === head) {
     var a = opts.arrays ? [] : create(obj)
     for(var key in obj) {
